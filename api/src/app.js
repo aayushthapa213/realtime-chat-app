@@ -19,7 +19,7 @@ app.use(
 dotenv.config({ path: "../.env" });
 
 app.use("/api/auth", authRouter);
-app.use("/api/message", messageRouter);
+app.use("/api/messages", messageRouter);
 
 const port = process.env.PORT || 3000;
 
