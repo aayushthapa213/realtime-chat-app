@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 import useChatStore from "../store/chatStore.js";
 import SidebarSkeleton from "./skeletons/SideBarSkeleton.jsx";
 import { Users } from "lucide-react";
+import useAuthStore from "../store/authStore.js";
 
 const SideBar = () => {
   const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } =
     useChatStore();
-  const onlineUsers = [];
+  const { onlineUsers } = useAuthStore();
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
 
   useEffect(() => {
     getUsers();
   }, [getUsers]);
-
+ 
   const filteredUsers = showOnlineOnly
     ? users.filter((user) => onlineUsers.includes(user._id))
     : users;

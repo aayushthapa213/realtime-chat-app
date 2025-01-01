@@ -5,8 +5,7 @@ import messageRouter from "./routes/message.route.js";
 import connectDB from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-
-const app = express();
+import { app, server } from "./lib/socket.js";
 
 app.use(
   cors({
@@ -25,7 +24,7 @@ app.use("/api/messages", messageRouter);
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, (err) => {
+server.listen(port, (err) => {
   connectDB();
   if (err) {
     console.log(err);
