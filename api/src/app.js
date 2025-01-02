@@ -5,6 +5,7 @@ import messageRouter from "./routes/message.route.js";
 import connectDB from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import path from "path";
 import { app, server } from "./lib/socket.js";
 
 app.use(
@@ -19,8 +20,17 @@ app.use(cookieParser());
 
 dotenv.config({ path: "../.env" });
 
+const __dirname = path.resolve();
+
 app.use("/api/auth", authRouter);
 app.use("/api/messages", messageRouter);
+
+if (process.env.NODE_ENV == "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });
+}
 
 const port = process.env.PORT || 3000;
 
